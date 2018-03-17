@@ -61,7 +61,9 @@ def create_order(order_type, quantity, action, account):
     return order
 
 
+
 if __name__ == "__main__":
+    print("active")
     # Connect to the Trader Workstation (TWS) running on the
     # usual port of 7496, with a clientId of 100
     # (The clientId is chosen by us and we will need
@@ -80,7 +82,7 @@ if __name__ == "__main__":
 
     # Create an order ID which is 'global' for this session. This
     # will need incrementing once new orders are submitted.
-    order_id = 42
+    order_id = 50
 
     # Create a contract in GOOG stock via SMART order routing
     #goog_contract = create_contract('AAPL', 'STK', 'SMART', 'SMART', 'USD')
@@ -93,11 +95,10 @@ if __name__ == "__main__":
 
 
     msft_option = makeOptContract('SPY', '20180615', 280, 'CALL')
-    msft_order = create_order('MKT', 100, 'BUY', 'DU958186')
+    msft_order = create_order('MKT', 1, 'BUY', 'DU958186')
     tws_conn.placeOrder(order_id, msft_option, msft_order)
 
     #tws_conn.reqMktData(tickId, 'AAPL', False)
-
 
     # Disconnect from TWS
     tws_conn.disconnect()
