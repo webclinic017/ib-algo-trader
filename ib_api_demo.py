@@ -104,4 +104,20 @@ if __name__ == "__main__":
     tws_conn.disconnect()
 
 
+'''
+#next order id from system
 
+def save_order_id(msg):
+
+    print('Next Valid ID is ' + str(msg.orderId))
+
+con = ibConnection(port=7497,clientId=100)
+
+con.register(save_order_id, 'NextValidId')
+
+con.connect()
+
+sleep(1)
+
+con.disconnect()
+'''
