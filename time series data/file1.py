@@ -2,6 +2,7 @@ import pandas_datareader as pdr
 import pandas as pd
 import datetime
 import quandl
+quandl.ApiConfig.api_key = '-VQTkx89BPNGVyjKvD1p'
 import matplotlib.pyplot as plt
 import numpy as np
 
