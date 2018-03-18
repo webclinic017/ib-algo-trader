@@ -25,6 +25,7 @@ all_data['all_returns'] = np.log(all_data['AdjClose'] / all_data['AdjClose'].shi
 
 #all_data.to_csv('tempfile1.csv')
 
+
 aapl_returns = all_data[all_data.Ticker == 'AAPL']
 aaplm = aapl_returns.loc[:,['Date', 'all_returns']]
 aaplm.rename(columns={'all_returns': 'AAPL_return'}, inplace=True)
@@ -38,6 +39,7 @@ msftm.rename(columns={'all_returns': 'MSFT_return'}, inplace=True)
 #msftm.to_csv('temp2.csv')
 return_data = pd.merge(aaplm,msftm, how='outer', on='Date')[1:]
 #return_data.to_csv('AAPLvsMSFT_data.csv')
+
 
 # Add a constant
 x = sm.add_constant(return_data['AAPL_return'])
