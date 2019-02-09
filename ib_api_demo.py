@@ -82,7 +82,7 @@ if __name__ == "__main__":
 
     # Create an order ID which is 'global' for this session. This
     # will need incrementing once new orders are submitted.
-    order_id = 50
+    order_id = 3
 
     # Create a contract in GOOG stock via SMART order routing
     #goog_contract = create_contract('AAPL', 'STK', 'SMART', 'SMART', 'USD')
@@ -93,10 +93,10 @@ if __name__ == "__main__":
     # Use the connection to the send the order to IB
     #tws_conn.placeOrder(order_id, goog_contract, goog_order)
 
-
-    msft_option = makeOptContract('SPY', '20180615', 280, 'CALL')
-    msft_order = create_order('MKT', 1, 'BUY', 'DU958186')
-    tws_conn.placeOrder(order_id, msft_option, msft_order)
+    msft_contract = create_contract('SPY', 'STK', 'SMART', 'SMART', 'USD')
+    msft_option = makeOptContract('SPY', '20190219', 280, 'CALL')
+    msft_order = create_order('MKT', 1, 'BUY', 'DU226953')
+    tws_conn.placeOrder(order_id, msft_contract, msft_order)
 
     #tws_conn.reqMktData(tickId, 'AAPL', False)
 
