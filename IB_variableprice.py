@@ -1,15 +1,18 @@
 from ibapi import wrapper
 from ibapi.client import EClient
-from ibapi.utils import iswrapper #just for decorator
 from ibapi.common import *
 from ibapi.contract import *
 from ibapi.ticktype import *
+from ibapi.utils import iswrapper  # just for decorator
+from time import sleep
+
 
 class TestApp(wrapper.EWrapper, EClient):
-    def __init__(self):
+    def __init__(self, stock_ticker):
         wrapper.EWrapper.__init__(self)
         EClient.__init__(self, wrapper=self)
         self.bank = 0
+        self.stock_ticker = stock_ticker
 
     @iswrapper
     def nextValidId(self, orderId:int):
@@ -17,7 +20,7 @@ class TestApp(wrapper.EWrapper, EClient):
         self.nextValidOrderId = orderId
         #here is where you start using api
         contract = Contract()
-        contract.symbol = "SPY"
+        contract.symbol = self.stock_ticker
         contract.secType = "STK"
         contract.currency = "USD"
         contract.exchange = "SMART"
@@ -33,6 +36,7 @@ class TestApp(wrapper.EWrapper, EClient):
                   attrib:TickAttrib):
         print("Tick Price. Ticker Id:", reqId, "tickType:", tickType, "Price:", price)
         #this will disconnect and end this program because loop finishes
+        sleep(1)
         self.done = True
         self.bank = price
 
@@ -42,14 +46,15 @@ class TestApp(wrapper.EWrapper, EClient):
 
 
 def main():
-    app = TestApp()
+    app = TestApp('SPY')
     app.connect("localhost", 7497, clientId=100)
     print("serverVersion:%s connectionTime:%s" % (app.serverVersion(),
                                                 app.twsConnectionTime()))
     app.run()
     dolla = app.print_bank()
-    print(dolla)
+    return dolla
 
 
 if __name__ == "__main__":
     main()
+

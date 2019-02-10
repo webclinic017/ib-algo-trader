@@ -41,7 +41,7 @@ if __name__ == '__main__':
 
     # Note: Option quotes will give an error if they aren't shown in TWS
 
-    contractTuple = ('SPY', 'STK', 'SMART', 'USD', '', 0.0, '')
+    contractTuple = ('AMZN', 'STK', 'SMART', 'USD', '', 0.0, '')
     #contractTuple = ('SPY', 'OPT', 'SMART', 'USD', '20180321', 275.0, 'CALL')
     # contractTuple = ('ES', 'FUT', 'GLOBEX', 'USD', '200709', 0.0, '')
     # contractTuple = ('ES', 'FOP', 'GLOBEX', 'USD', '20070920', 1460.0, 'CALL')
