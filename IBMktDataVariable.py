@@ -8,7 +8,7 @@ class Downloader(object):
     field4price = ''
 
     def __init__(self):
-        self.tws = ibConnection('localhost', 4001, 0)
+        self.tws = ibConnection('localhost', 7947, 0)
         self.tws.register(self.tickPriceHandler, 'TickPrice')
         self.tws.connect()
         self._reqId = 2 # current request id

@@ -28,7 +28,6 @@ def makeStkContract(contractTuple):
     return newContract
 
 if __name__ == '__main__':
-    a = '55'
     con = ibConnection(port=7497, clientId=100)
     con.registerAll(watcher)
     showBidAskOnly = False   # set False to see the raw message
@@ -57,5 +56,4 @@ if __name__ == '__main__':
     sleep(1)
     con.disconnect()
     sleep(1)
-    print('asdafas',a)
 
