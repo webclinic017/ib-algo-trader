@@ -1,3 +1,8 @@
+import sys
+sys.path.insert(0, '../../extralibrary/TWS API/samples/Python')
+
+
+from Testbed.OrderSamples import OrderSamples
 from ibapi import wrapper
 from ibapi.client import EClient
 from ibapi.common import *
@@ -36,7 +41,6 @@ class TestApp(wrapper.EWrapper, EClient):
                   attrib:TickAttrib):
         print("Tick Price. Ticker Id:", reqId, "tickType:", tickType, "Price:", price)
         #this will disconnect and end this program because loop finishes
-        sleep(1)
         self.done = True
         self.bank = price
 
@@ -46,10 +50,20 @@ class TestApp(wrapper.EWrapper, EClient):
 
 
 def main():
+
+    stock_contract = Contract()
+    stock_contract.symbol = 'SPY'
+    stock_contract.secType = 'STK'
+    stock_contract.exchange = 'SMART'
+    stock_contract.currency = 'USD'
+    stock_contract.primaryExchange = 'NASDAQ'
+
     app = TestApp('SPY')
     app.connect("localhost", 7497, clientId=100)
     print("serverVersion:%s connectionTime:%s" % (app.serverVersion(),
                                                 app.twsConnectionTime()))
+    #app.reqContractDetails(1101+1, stock_contract)
+    app.placeOrder(1101+9, stock_contract, OrderSamples.LimitOrder("BUY", 100, 271))
     app.run()
     dolla = app.print_bank()
     return dolla
