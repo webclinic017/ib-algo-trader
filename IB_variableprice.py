@@ -59,15 +59,15 @@ def main():
     stock_contract.primaryExchange = 'NASDAQ'
 
     app = TestApp('SPY')
-    app.connect("localhost", 7497, clientId=100)
+    app.connect("localhost", 7497, clientId=105)
     print("serverVersion:%s connectionTime:%s" % (app.serverVersion(),
                                                 app.twsConnectionTime()))
     #app.reqContractDetails(1101+1, stock_contract)
-    app.placeOrder(1101+9, stock_contract, OrderSamples.LimitOrder("BUY", 100, 271))
+    app.placeOrder(1101+14, stock_contract, OrderSamples.LimitOrder("BUY", 100, 271))
     app.run()
     dolla = app.print_bank()
     return dolla
-
+    app.disconnect()
 
 if __name__ == "__main__":
     main()
