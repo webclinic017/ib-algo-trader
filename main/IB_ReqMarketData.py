@@ -25,7 +25,7 @@ class TestApp(wrapper.EWrapper, EClient):
     def nextValidId(self, orderId:int):
         print("setting nextValidOrderId: %d", orderId)
         self.nextValidOrderId = orderId
-        #here is where you start using api
+        # API starts below
         contract = Contract()
         contract.symbol = self.stock_symbol
         contract.secType = "STK"
@@ -33,7 +33,7 @@ class TestApp(wrapper.EWrapper, EClient):
         contract.exchange = "SMART"
         contract.primaryExchange = 'NASDAQ'
         self.reqMarketDataType(4)
-        self.reqMktData(1002, contract, "", False, False, [])
+        self.reqMktData(1004, contract, "", False, False, [])
 
     @iswrapper
     def error(self, reqId:TickerId, errorCode:int, errorString:str):
@@ -44,7 +44,7 @@ class TestApp(wrapper.EWrapper, EClient):
                   attrib:TickAttrib):
         print("Tick Price. Ticker Id:", reqId, "tickType:", tickType, "Price:", price)
         self.current_price = price
-        #this will disconnect and end this program because loop finishes
+        # API ends and disconnects program because loop finishes
         self.done = True
 
 def main(stock_symbol):
@@ -57,4 +57,9 @@ def main(stock_symbol):
     return app.get_current_price()
 
 if __name__ == "__main__":
-    main("SPY")
+    try:
+        main()
+    except Exception as e:
+        print('Missing ticker symbol, defaulting to "SPY"')
+        main("SPY")
+

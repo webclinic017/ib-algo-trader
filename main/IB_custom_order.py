@@ -22,7 +22,7 @@ class TestApp(wrapper.EWrapper, EClient):
     def nextValidId(self, orderId:int):
         print("setting nextValidOrderId: %d", orderId)
         self.nextValidOrderId = orderId
-        #here is where you start using api
+        # API starts below
         self.reqMarketDataType(4)
         self.reqMktData(1000, self.contract, "", False, False, [])
         self.placeOrder(self.nextValidOrderId, self.contract, self.order)
@@ -36,7 +36,7 @@ class TestApp(wrapper.EWrapper, EClient):
     def tickPrice(self, reqId: TickerId , tickType: TickType, price: float,
                   attrib:TickAttrib):
         print("Tick Price. Ticker Id:", reqId, "tickType:", tickType, "Price:", price)
-        #this will disconnect and end this program because loop finishes
+        # API ends and disconnects program because loop finishes
         self.done = True
 
 def main(contract, order):

@@ -11,7 +11,6 @@ import IB_custom_order as ib_order
 import time
 
 
-
 def check(params, kwarg_params):
     for param in params:
         if param not in kwarg_params:
@@ -43,21 +42,26 @@ def order_type(**kwargs):
     else:
         print('Missing param: type')
 
-contract = Contract()
-contract.symbol = "XLK"
-contract.secType = "STK"
-contract.currency = "USD"
-contract.exchange = "SMART"
-contract.primaryExchange = 'NASDAQ'
+def main():
+    contract = Contract()
+    contract.symbol = "XLK"
+    contract.secType = "STK"
+    contract.currency = "USD"
+    contract.exchange = "SMART"
+    contract.primaryExchange = 'NASDAQ'
 
-limit_order = order_type(type="limit", order="BUY", quantity="100", limit=74)
+    limit_order = order_type(type="limit", order="BUY", quantity="100", limit=74)
+    market_order = order_type(type="market", order="BUY", quantity="100")
 
-for i in range(2):
-    price = ib_reqmarket.main("XLK")
-    if price > 72:
-        ib_order.main(contract, limit_order)
-        print("Current value is ", price, "Buying 100 shares.")
-    else:
-        print("Current value is ", price, "Do nothing.")
-    time.sleep(3)
+    for i in range(2):
+        price = ib_reqmarket.main("XLK")
+        if price > 72:
+            ib_order.main(contract, market_order)
+            print("Current value is", price, "Buying 100 shares.")
+        else:
+            print("Current value is", price, "Do nothing.")
+        time.sleep(3)
 
+
+if __name__ == '__main__':
+    main()
