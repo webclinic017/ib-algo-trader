@@ -40,18 +40,19 @@ class data_file:
             df.to_csv(Path('./data_historical/') / 'data_{}.csv'.format(self.ticker), index=False)
 
 
-def check(params, kwarg_params):
-    for param in params:
-        if param not in kwarg_params:
-            print("Missing params: {0}".format(param))
-            return False
-        else:
-            pass
-    return True
-
 
 
 def order_type(**kwargs):
+
+    def check(params, kwarg_params):
+        for param in params:
+            if param not in kwarg_params:
+                print("Missing params: {0}".format(param))
+                return False
+            else:
+                pass
+        return True
+
     """
     :param kwargs:
     type : ["limit", "market"]
@@ -73,7 +74,7 @@ def order_type(**kwargs):
         print('Missing param: type')
 
 def main():
-    ticker = "XLK"
+    ticker = "SPY"
 
     contract = Contract()
     contract.symbol = ticker
