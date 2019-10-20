@@ -83,7 +83,7 @@ def main():
     contract.exchange = "SMART"
     contract.primaryExchange = 'NASDAQ'
 
-    limit_order = order_type(type="limit", order="BUY", quantity="100", limit=74)
+    limit_order = order_type(type="limit", order="BUY", quantity="100", limit=73.5)
     market_order = order_type(type="market", order="BUY", quantity="100")
 
     for i in range(2):
