@@ -93,7 +93,7 @@ def main():
         data_historical.check_data_file()
         data_historical.write_to_data()
 
-        if price > 72:
+        if price > 301:
             ib_order.main(contract, market_order)
             print("Current value is", price, "Buying 100 shares.")
         else:
