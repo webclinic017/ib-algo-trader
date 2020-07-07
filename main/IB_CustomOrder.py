@@ -5,9 +5,7 @@ from ibapi.common import *
 from ibapi.contract import *
 from ibapi.ticktype import *
 
-import sys
-sys.path.insert(0, '../../../extralibrary/TWS API/samples/Python')
-from Testbed.OrderSamples import OrderSamples
+from IB_OrderType import OrderType
 
 class TestApp(wrapper.EWrapper, EClient):
     def __init__(self):
@@ -20,32 +18,41 @@ class TestApp(wrapper.EWrapper, EClient):
 
     @iswrapper
     def nextValidId(self, orderId:int):
-        print("setting nextValidOrderId: %d", orderId)
+        # print("setting nextValidOrderId: %d", orderId)
         self.nextValidOrderId = orderId
         # API starts below
         self.reqMarketDataType(4)
         self.reqMktData(1000, self.contract, "", False, False, [])
         self.placeOrder(self.nextValidOrderId, self.contract, self.order)
 
-
     @iswrapper
     def error(self, reqId:TickerId, errorCode:int, errorString:str):
-        print("Error. Id: " , reqId, " Code: " , errorCode , " Msg: " , errorString)
-
+        # print("Error. Id: " , reqId, " Code: " , errorCode , " Msg: " , errorString)
+        pass
     @iswrapper
     def tickPrice(self, reqId: TickerId , tickType: TickType, price: float,
                   attrib:TickAttrib):
-        print("Tick Price. Ticker Id:", reqId, "tickType:", tickType, "Price:", price)
+        # print("Tick Price. Ticker Id:", reqId, "tickType:", tickType, "Price:", price)
         # API ends and disconnects program because loop finishes
         self.done = True
+
 
 def main(contract, order):
     app = TestApp()
     app.set_order(contract, order)
     app.connect("127.0.0.1", 7497, clientId=100)
-    print("serverVersion:%s connectionTime:%s" % (app.serverVersion(),
-                                                app.twsConnectionTime()))
     app.run()
 
 if __name__ == "__main__":
-    main()
+    ticker = "SPY"
+
+    contract = Contract()
+    contract.symbol = ticker
+    contract.secType = "STK"
+    contract.currency = "USD"
+    contract.exchange = "SMART"
+    contract.primaryExchange = 'NASDAQ'
+
+    market_order = OrderType(type='market', order="BUY", quantity="100").get_order()
+    main(contract, market_order)
+    print(f"Buying (or Covering) 100 Shares of {ticker}.")

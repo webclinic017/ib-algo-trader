@@ -9,6 +9,7 @@ from ibapi.contract import *
 from Testbed.OrderSamples import OrderSamples
 import IB_ReqMarketData as ib_reqmarket
 import IB_custom_order as ib_order
+import IB_CurrentPositions as ib_positions
 
 class data_file:
     """
@@ -74,6 +75,7 @@ def order_type(**kwargs):
         print('Missing param: type')
 
 def main():
+    accountID = "DU2422130"
     ticker = "SPY"
 
     contract = Contract()
@@ -87,13 +89,18 @@ def main():
     market_order = order_type(type="market", order="BUY", quantity="100")
 
     for i in range(2):
+        all_positions = ib_positions.main()
+        df_positions = pd.DataFrame(all_positions, columns = ['account', 'symbol', 'position', 'avgCost'])
+        df_positions = df_positions[df_positions['account'].isin([accountID])]
+        print(df_positions)
+
         price = ib_reqmarket.main(ticker)
 
-        data_historical = data_file(ticker,price)
-        data_historical.check_data_file()
-        data_historical.write_to_data()
+        # data_historical = data_file(ticker,price)
+        # data_historical.check_data_file()
+        # data_historical.write_to_data()
 
-        if price > 301:
+        if price > 320:
             ib_order.main(contract, market_order)
             print("Current value is", price, "Buying 100 shares.")
         else:
