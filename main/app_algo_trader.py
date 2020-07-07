@@ -40,6 +40,11 @@ while True:
     shares = df_positions[df_positions['symbol'].isin([ticker])]['position'].sum()
     price = ib_reqmarket.main(ticker)
     print(f"Current value is {price}, threshold: {threshold_price}")
+
+    if price == -1:
+        print("breaking...")
+        break
+
     if price > threshold_price:
         if shares > 0:
             print(f"Position: {ticker}, Shares: {shares} --- Do nothing.")
