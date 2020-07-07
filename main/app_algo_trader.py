@@ -44,6 +44,7 @@ while True:
     price = ib_reqmarket.main(ticker)
     print(f"Current value is {price}, threshold: {threshold_price}")
 
+    # Returns -1 price if no available market data
     if price == -1:
         print("breaking...")
         break
